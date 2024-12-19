@@ -1,1 +1,3 @@
 GET http://localhost:3000/api/cinemark
+GET http://localhost:3000/api/test
+GET https://www.veloxtickets.com/Portal/api/v1/cepcity/geolocation?latitude=-23.9549&longitude=-46.2238
