@@ -1,12 +1,15 @@
 import { MovieComponent } from "./components/MovieComponent";
-import { movieFactory } from "./factories/MovieFactory";
-import { Movie } from "./interfaces/Movies";
+import { Movie } from "../interfaces/Movies";
+import { MovieService } from "@/service/MovieService";
 
 export default async function Home() {
-    const movies: Movie[] = await movieFactory().getMovies();
+    const movies: Movie[] = await MovieService.getMovies();
+
     return (
         <div>
-            {movies.map(movie => <MovieComponent movie={movie} key={movie.id} />)} 
+            {movies.map((movie) => (
+                <MovieComponent movie={movie} key={movie.id} />
+            ))}
         </div>
     );
 }

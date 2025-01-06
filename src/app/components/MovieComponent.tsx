@@ -1,4 +1,4 @@
-import { Movie } from "../interfaces/Movies";
+import { Movie } from "../../interfaces/Movies";
 
 interface MovieComponentProps {
     movie: Movie;
@@ -7,9 +7,9 @@ interface MovieComponentProps {
 export function MovieComponent({ movie }: MovieComponentProps) {
     return (
         <div>
-            <img src={movie.posterUrl} alt={movie.name} className="w-48 h-60"/>
+            <img src={movie.imageUrl} alt={movie.name} className="w-48 h-60" />
             <h3>{movie.name}</h3>
             <span>{movie.genre}</span>
         </div>
-    )
+    );
 }
