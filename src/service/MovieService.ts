@@ -8,8 +8,8 @@ export class MovieService {
         this.cinemarkService = new CinemarkService();
     }
 
-    private static async formatCinemark(): Promise<Movie[]> {
-        const data = await CinemarkService.getMovies();
+    private async formatCinemark(): Promise<Movie[]> {
+        const data = await CinemarkService
         return data.dataResult.map((m) => {
             return {
                 id: m.id,
@@ -24,7 +24,7 @@ export class MovieService {
         });
     }
 
-    static async getMovies(): Promise<Movie[]> {
+    public async getMovies(): Promise<Movie[]> {
         const response: Movie[] = [];
         const cinemarkMovies = await this.formatCinemark();
         cinemarkMovies.forEach((element) => {

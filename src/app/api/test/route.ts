@@ -1,4 +1,4 @@
-import { movieFactory } from "@/factories/MovieFactory";
+import { MovieServiceFactory } from "@/factories/MovieServiceFactory";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -6,7 +6,7 @@ export async function GET() {
         "https://www.veloxtickets.com/Portal/Local/Cinema/Santos/Roxy-5-Gonzaga/GOZ"
     );
     const text = await test.text();
-    const movies = await movieFactory().getMovies();
+    const movies = await MovieServiceFactory.getMovies();
     const res: number[] = [];
     movies.forEach((movie) => {
         res.push(text.indexOf(movie.name));
