@@ -45,7 +45,7 @@ export interface CinemarkMovieResult {
     snackbarCategoryId: number;
     snackbarCategoryPrimeId: number;
 }
-type AgeIndicator = "L";
+type AgeIndicator = "L" | "10";
 
 export interface CinemarkTag {
     icon: string;
