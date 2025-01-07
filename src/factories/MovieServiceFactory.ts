@@ -1,4 +1,4 @@
-import { Movie, MovieDTO } from "@/interfaces/Movies";
+import { Movie, MovieDTO } from "@/interfaces/Movie";
 import { CinemarkService } from "@/service/CinemarkService";
 import { MovieService } from "@/service/MovieService";
 

@@ -1,9 +1,9 @@
-import { Movie } from "@/interfaces/Movies";
-import { CinemarkService } from "@/service/CinemarkService";
+import { CinemarkServiceFactory } from "@/factories/CinemarkServiceFactory";
+import { Movie } from "@/interfaces/Movie";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    const data = await CinemarkService.getMovies();
+    const data = await CinemarkServiceFactory.getMovies();
     const response: Movie[] = data.dataResult.map((m) => {
         return {
             id: m.id,

@@ -1,32 +1,16 @@
-import { Movie, MovieDTO } from "../interfaces/Movies";
+import { Movie, MovieDTO } from "../interfaces/Movie";
 import { CinemarkService } from "./CinemarkService";
 
 export class MovieService {
     private readonly cinemarkService: CinemarkService;
 
-    constructor() {
-        this.cinemarkService = new CinemarkService();
-    }
-
-    private async formatCinemark(): Promise<Movie[]> {
-        const data = await CinemarkService
-        return data.dataResult.map((m) => {
-            return {
-                id: m.id,
-                name: m.name,
-                slug: m.slug,
-                genre: m.genre,
-                duration: m.duration,
-                imageUrl: m.assets[0].url,
-                ageIndicator: m.ageIndicator,
-                sessions: [],
-            };
-        });
+    constructor(cinemarkService: CinemarkService) {
+        this.cinemarkService = cinemarkService;
     }
 
     public async getMovies(): Promise<Movie[]> {
         const response: Movie[] = [];
-        const cinemarkMovies = await this.formatCinemark();
+        const cinemarkMovies = await this.cinemarkService.getFormatedMovies();
         cinemarkMovies.forEach((element) => {
             response.push(element);
         });

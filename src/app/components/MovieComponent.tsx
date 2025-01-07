@@ -1,4 +1,4 @@
-import { Movie } from "../../interfaces/Movies";
+import { Movie } from "../../interfaces/Movie";
 
 interface MovieComponentProps {
     movie: Movie;
