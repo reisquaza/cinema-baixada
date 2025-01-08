@@ -11,7 +11,6 @@ export class MovieService {
     public async getMovies(): Promise<Movie[]> {
         const response: Movie[] = [];
         const cinemarkMovies = await this.cinemarkService.getFormatedMovies();
-        console.log("cnmovies", cinemarkMovies);
         cinemarkMovies.forEach((element) => {
             response.push(element);
         });
