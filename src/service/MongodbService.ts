@@ -8,10 +8,10 @@ export class MongodbService implements Repository {
         this.collection = database.collection(collection);
     }
 
-    public static async client() {
+    public static async db() {
         const client = new MongoClient(process.env.MONGODB_URL!);
         await client.connect();
-        return client;
+        return client.db(process.env.MONGODB_DATABASE);
     }
 
     public async create<T>(
