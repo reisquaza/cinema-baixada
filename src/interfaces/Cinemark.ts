@@ -38,14 +38,14 @@ export interface CinemarkMovieResult {
     assets: CinemarkAssets[];
     tag: CinemarkTag;
     duration: number;
-    ageIndicator: AgeIndicator;
+    ageIndication: AgeIndication;
     isFavorite: boolean;
     genre: string;
     displaySessionType: number;
     snackbarCategoryId: number;
     snackbarCategoryPrimeId: number;
 }
-type AgeIndicator = "L" | "10";
+type AgeIndication = "L" | "10";
 
 export interface CinemarkTag {
     icon: string;
