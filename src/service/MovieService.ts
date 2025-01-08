@@ -35,4 +35,24 @@ export class MovieService {
         };
         return movie;
     }
+
+    public async getByTheaterId(theaterId: string): Promise<Movie[]> {
+        const data = await this.repository.getBy<Movie>({
+            theaterId: theaterId,
+        });
+        const movies: Movie[] = data.map((movie) => {
+            return {
+                id: movie.id,
+                ageIndication: movie.ageIndication,
+                duration: movie.duration,
+                genre: movie.genre,
+                imageUrl: movie.imageUrl,
+                name: movie.name,
+                sessions: movie.sessions,
+                slug: movie.slug,
+                theaterId: movie.theaterId
+            };
+        });
+        return movies;
+    }
 }

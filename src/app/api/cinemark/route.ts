@@ -1,21 +1,11 @@
 import { CinemarkServiceFactory } from "@/factories/CinemarkServiceFactory";
-import { Movie } from "@/interfaces/Movie";
+import { MovieServiceFactory } from "@/factories/MovieServiceFactory";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const data = await CinemarkServiceFactory.getMovies();
-  const response: Movie[] = data.dataResult.map((m) => {
-    return {
-      id: m.id,
-      name: m.name,
-      slug: m.slug,
-      genre: m.genre,
-      duration: m.duration,
-      imageUrl: m.assets[0].url,
-      ageIndicator: m.ageIndicator,
-      sessions: [],
-    };
-  });
-
-  return NextResponse.json(response);
+    const movies = await CinemarkServiceFactory.getFormatedMovies();
+    for (let index = 0; index < movies.length; index++) {
+        // await MovieServiceFactory.create(movies[index]);
+    }
+    return NextResponse.json(movies);
 }

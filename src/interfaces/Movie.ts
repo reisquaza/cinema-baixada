@@ -6,13 +6,16 @@ export interface MovieDTO {
     ageIndication: AgeIndication;
     sessions: MovieSession[];
     slug: string;
-    theaterId: string;
+    theater: MovieTheater;
 }
 
 export interface Movie extends MovieDTO {
     id: string;
 }
-
+export interface MovieTheater {
+    id: string
+    movieId: string | null
+}
 export interface MovieSession {
     room: number;
     date: Date;

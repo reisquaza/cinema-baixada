@@ -47,7 +47,7 @@ export class CinemarkService {
         for (let i = 0; i < data.dataResult.length; i++) {
             const element = data.dataResult[i];
             const movie: Movie = {
-                id: element.id,
+                id: "",
                 name: element.name,
                 slug: element.slug,
                 genre: element.genre,
@@ -55,12 +55,17 @@ export class CinemarkService {
                 imageUrl: element.assets[0].url,
                 ageIndication: element.ageIndication,
                 sessions: [],
-                theaterId: "",
+                theater: {
+                    id: "",
+
+                    movieId: element.id,
+                },
             };
             const sessions = await this.getMovieSession(element.id);
 
             sessions.dataResult.forEach((result) => {
                 movie.sessions = this.formatSessions(result);
+                console.log("total rooms:", result.rooms.length);
             });
 
             movies.push(movie);

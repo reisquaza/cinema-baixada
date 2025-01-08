@@ -14,8 +14,9 @@ export async function GET() {
         city: { id: city.id, name: city.name },
         movies: [],
         name: "cinemark",
-        url: "https://www.cinemark.con.br",
+        url: "https://www.cinemark.com.br",
     };
     const theater = await TheaterServiceFactory.create(theaterDTO);
+    
     return NextResponse.json(theater);
 }

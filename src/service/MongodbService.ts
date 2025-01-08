@@ -21,6 +21,15 @@ export class MongodbService implements Repository {
         return { id: insertedId.toHexString() };
     }
 
+    public async getBy<T>(filter: Partial<T>): Promise<T[]> {
+        const find = await this.collection.find(filter).toArray();
+        return find.map((doc) => {
+            const { _id, ...rest } = doc;
+            const result = { ...rest, id: _id.toString() };
+            return result as T;
+        });
+    }
+
     // get<T>(): Promise<T> {
 
     // }
