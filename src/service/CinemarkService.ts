@@ -53,8 +53,9 @@ export class CinemarkService {
                 genre: element.genre,
                 duration: element.duration,
                 imageUrl: element.assets[0].url,
-                ageIndicator: element.ageIndication,
+                ageIndication: element.ageIndication,
                 sessions: [],
+                theaterId: "",
             };
             const sessions = await this.getMovieSession(element.id);
 

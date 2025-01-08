@@ -8,7 +8,7 @@ export class MovieServiceFactory {
         const cinemarkService = new CinemarkService();
         const db = await MongodbService.db();
         const mongodbService = new MongodbService(db, "movie");
-        return new MovieService(cinemarkService, mongodbService).create(
+        return await new MovieService(cinemarkService, mongodbService).create(
             movieDTO
         );
     }
@@ -17,6 +17,9 @@ export class MovieServiceFactory {
         const cinemarkService = new CinemarkService();
         const db = await MongodbService.db();
         const mongodbService = new MongodbService(db, "movie");
-        return new MovieService(cinemarkService, mongodbService).getMovies();
+        return await new MovieService(
+            cinemarkService,
+            mongodbService
+        ).getMovies();
     }
 }

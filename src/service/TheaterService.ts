@@ -8,18 +8,14 @@ export class TheaterService {
         this.repository = repository;
     }
 
-    public async create(theaterDTO: TheaterDTO): Promise<Omit<Theater, "id">> {
-        const theater: Omit<Theater, "id"> = {
-            city: theaterDTO.city,
-            movies: [],
-            name: theaterDTO.name,
-            url: theaterDTO.url,
-        };
-        return theater;
-    }
-
-    public async save(theater: Omit<Theater, "id">): Promise<Theater> {
+    public async create(theater: TheaterDTO): Promise<Theater> {
         const { id } = await this.repository.create(theater);
-        return { id, ...theater };
+        return {
+            id,
+            city: theater.city,
+            movies: theater.movies,
+            name: theater.name,
+            url: theater.url,
+        };
     }
 }

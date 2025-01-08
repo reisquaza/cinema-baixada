@@ -20,21 +20,19 @@ export class MovieService {
         return response;
     }
 
-    public async create(movieDTO: MovieDTO): Promise<Omit<Movie, "id">> {
-        const movie: Omit<Movie, "id"> = {
-            ageIndicator: movieDTO.ageIndicator,
+    public async create(movieDTO: MovieDTO): Promise<Movie> {
+        const { id } = await this.repository.create(movieDTO);
+        const movie: Movie = {
+            id: id,
+            ageIndication: movieDTO.ageIndication,
             duration: movieDTO.duration,
             genre: movieDTO.genre,
             imageUrl: movieDTO.imageUrl,
             name: movieDTO.name,
-            slug: movieDTO.name,
             sessions: movieDTO.sessions,
+            slug: movieDTO.slug,
+            theaterId: movieDTO.theaterId,
         };
         return movie;
-    }
-
-    public async save(movie: Omit<Movie, "id">): Promise<Movie> {
-        const { id } = await this.repository.create(movie);
-        return { id, ...movie };
     }
 }

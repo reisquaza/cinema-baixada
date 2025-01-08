@@ -3,18 +3,19 @@ export interface MovieDTO {
     genre: string;
     imageUrl: string;
     duration: number;
-    ageIndicator: AgeIndicator;
+    ageIndication: AgeIndication;
     sessions: MovieSession[];
+    slug: string;
+    theaterId: string;
 }
 
 export interface Movie extends MovieDTO {
     id: string;
-    slug: string;
 }
 
 export interface MovieSession {
-    room: number
+    room: number;
     date: Date;
 }
 
-export type AgeIndicator = "L" | "10" | "12" | "16" | "18";
+export type AgeIndication = "L" | "10" | "12" | "16" | "18";

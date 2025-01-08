@@ -1,16 +1,21 @@
-import { MovieServiceFactory } from "@/factories/MovieServiceFactory";
+import { CityServiceFactory } from "@/factories/CityServiceFactory";
+import { TheaterServiceFactory } from "@/factories/TheaterServiceFactory";
+import { CityDTO } from "@/interfaces/City";
+import { TheaterDTO } from "@/interfaces/Theater";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const test = await fetch(
-    "https://www.veloxtickets.com/Portal/Local/Cinema/Santos/Roxy-5-Gonzaga/GOZ"
-  );
-  const text = await test.text();
-  const movies = await MovieServiceFactory.getMovies();
-  const res: number[] = [];
-  movies.forEach((movie) => {
-    res.push(text.indexOf(movie.name));
-  });
-  console.log(text);
-  return NextResponse.json(res);
+    const cityDTO: CityDTO = {
+        name: "Santos",
+        theaters: [],
+    };
+    const city = await CityServiceFactory.create(cityDTO);
+    const theaterDTO: TheaterDTO = {
+        city: { id: city.id, name: city.name },
+        movies: [],
+        name: "cinemark",
+        url: "https://www.cinemark.con.br",
+    };
+    const theater = await TheaterServiceFactory.create(theaterDTO);
+    return NextResponse.json(theater);
 }
