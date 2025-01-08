@@ -17,9 +17,8 @@ export class MovieService {
         return response;
     }
 
-    public async create(movieDTO: MovieDTO): Promise<Movie> {
-        const movie: Movie = {
-            id: "",
+    public async create(movieDTO: MovieDTO): Promise<Omit<Movie, "id">> {
+        const movie: Omit<Movie, "id"> = {
             ageIndicator: movieDTO.ageIndicator,
             duration: movieDTO.duration,
             genre: movieDTO.genre,
