@@ -1,7 +1,7 @@
-export interface CinemarkMovie {
+export interface CinemarkResponse<CinemarkResult> {
     success: boolean;
     messageError: null;
-    dataResult: CinemarkDataResult[];
+    dataResult: CinemarkResult[];
     pageNumber: number;
     totalItems: number;
     totalPages: number;
@@ -9,7 +9,29 @@ export interface CinemarkMovie {
     hasNextPage: boolean;
 }
 
-export interface CinemarkDataResult {
+export interface CinemarkSessionResult {
+    date: Date;
+    theaterId: string;
+    theatherName: string;
+    rooms: CinemarkSessionRoom[];
+}
+
+export interface CinemarkSessionRoom {
+    number: number;
+    features: number[];
+    audio: number;
+    sessions: CinemarkSession[];
+}
+
+export interface CinemarkSession {
+    id: string;
+    date: Date;
+    hybrid: boolean;
+    expired: boolean;
+    moviePrintCode: number;
+}
+
+export interface CinemarkMovieResult {
     id: string;
     slug: string;
     name: string;
@@ -23,7 +45,7 @@ export interface CinemarkDataResult {
     snackbarCategoryId: number;
     snackbarCategoryPrimeId: number;
 }
-type AgeIndicator = "L";
+type AgeIndicator = "L" | "10";
 
 export interface CinemarkTag {
     icon: string;

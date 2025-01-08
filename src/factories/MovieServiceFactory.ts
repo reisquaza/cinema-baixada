@@ -1,12 +1,15 @@
-import { Movie, MovieDTO } from "@/interfaces/Movies";
+import { Movie, MovieDTO } from "@/interfaces/Movie";
+import { CinemarkService } from "@/service/CinemarkService";
 import { MovieService } from "@/service/MovieService";
 
 export class MovieServiceFactory {
-  static async getMovies(): Promise<Movie[]> {
-    return new MovieService().getMovies();
+  public static create(movieDTO: MovieDTO): Promise<Movie> {
+    const cinemarkService = new CinemarkService();
+    return new MovieService(cinemarkService).create(movieDTO);
   }
 
-  static async create(movieDTO: MovieDTO): Promise<Movie> {
-    return new MovieService().create(movieDTO);
+  public static getMovies(): Promise<Movie[]> {
+    const cinemarkService = new CinemarkService();
+    return new MovieService(cinemarkService).getMovies();
   }
 }

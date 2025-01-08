@@ -1,5 +1,5 @@
 import { MovieComponent } from "./components/MovieComponent";
-import { Movie } from "../interfaces/Movies";
+import { Movie } from "../interfaces/Movie";
 import { MovieServiceFactory } from "@/factories/MovieServiceFactory";
 
 export default async function Home() {

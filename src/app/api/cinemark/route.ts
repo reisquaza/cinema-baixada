@@ -1,5 +1,5 @@
 import { CinemarkServiceFactory } from "@/factories/CinemarkServiceFactory";
-import { Movie } from "@/interfaces/Movies";
+import { Movie } from "@/interfaces/Movie";
 import { NextResponse } from "next/server";
 
 export async function GET() {

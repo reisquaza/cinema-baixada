@@ -13,10 +13,8 @@ export interface Movie extends MovieDTO {
 }
 
 export interface MovieSession {
-    type: sessionType;
-    time: Date;
+    room: number
+    date: Date;
 }
 
-export type sessionType = "dub" | "sub";
-
-export type AgeIndicator = "L";
+export type AgeIndicator = "L" | "10" | "12" | "16" | "18";
