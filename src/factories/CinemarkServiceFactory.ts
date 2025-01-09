@@ -1,25 +1,28 @@
-import {
-    CinemarkMovieResult,
-    CinemarkResponse,
-    CinemarkSessionResult,
-} from "@/interfaces/Cinemark";
+import { CinemarkResponse, CinemarkSessionResult } from "@/interfaces/Cinemark";
 import { Movie } from "@/interfaces/Movie";
 import { CinemarkService } from "@/service/CinemarkService";
+import { TheaterServiceFactory } from "./TheaterServiceFactory";
 
 export class CinemarkServiceFactory {
-    public static async getMovies(): Promise<
-        CinemarkResponse<CinemarkMovieResult>
-    > {
-        return await new CinemarkService().getMovies();
+    public static async build() {
+        const theaterService = await TheaterServiceFactory.build();
+        return new CinemarkService(theaterService);
+    }
+
+    public static async getMovies() {
+        const cinemarkService = await CinemarkServiceFactory.build();
+        return await cinemarkService.getMovies();
     }
 
     public static async getMovieSession(
         cinemarkId: string
     ): Promise<CinemarkResponse<CinemarkSessionResult>> {
-        return new CinemarkService().getMovieSession(cinemarkId);
+        const cinemarkService = await CinemarkServiceFactory.build();
+        return await cinemarkService.getMovieSession(cinemarkId);
     }
 
-    public static async getFormatedMovies(): Promise<Movie[]> {
-        return new CinemarkService().getFormatedMovies();
+    public static async getFormatedMovies(theaterId: string): Promise<Movie[]> {
+        const cinemarkService = await CinemarkServiceFactory.build();
+        return await cinemarkService.getFormatedMovies(theaterId);
     }
 }

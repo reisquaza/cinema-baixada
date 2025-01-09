@@ -1,25 +1,18 @@
 import { Movie, MovieDTO } from "@/interfaces/Movie";
 import { MongodbRepository } from "@/repositories/mongodb/MongodbRepository";
 import { MovieService } from "@/service/MovieService";
-import { TheaterService } from "@/service/TheaterService";
-import { CityMongodbRepository } from "@/repositories/mongodb/CityMongodbRepository";
-import { CityService } from "@/service/CityService";
+import { TheaterServiceFactory } from "./TheaterServiceFactory";
 
 export class MovieServiceFactory {
-    private static async getParams() {
+    public static async build() {
         const db = await MongodbRepository.db();
-        const CityRepository = new CityMongodbRepository(db);
         const repository = new MongodbRepository(db, "movie");
-        const cityService = new CityService(CityRepository);
-        const theaterService = new TheaterService(repository, cityService);
-        return { db, CityRepository, repository, cityService, theaterService };
+        const theaterService = await TheaterServiceFactory.build();
+        return new MovieService(repository, theaterService);
     }
 
     public static async create(movieDTO: MovieDTO): Promise<Omit<Movie, "id">> {
-        const { repository, theaterService } =
-            await MovieServiceFactory.getParams();
-        return await new MovieService(repository, theaterService).create(
-            movieDTO
-        );
+        const movieService = await this.build();
+        return await movieService.create(movieDTO);
     }
 }

@@ -11,11 +11,11 @@ export async function GET() {
     };
     const city = await CityServiceFactory.create(cityDTO);
     const theaterDTO: TheaterDTO = {
-        city: { id: city.id, name: city.name },
+        city: { id: "677ffbe0b290bb8e9eaf8d4c", name: city.name },
         movies: [],
         name: "cinemark",
         url: "https://www.cinemark.com.br",
-        originId: "706"
+        originId: "706",
     };
     const theater = await TheaterServiceFactory.create(theaterDTO);
     return NextResponse.json(theater);
