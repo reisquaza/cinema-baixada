@@ -4,8 +4,15 @@ import {
     CinemarkResponse,
     CinemarkSessionResult,
 } from "../interfaces/Cinemark";
+import { TheaterService } from "./TheaterService";
 
 export class CinemarkService {
+    private readonly theaterService: TheaterService;
+
+    constructor(theaterService: TheaterService) {
+        this.theaterService = theaterService;
+    }
+
     public async getMovies(): Promise<CinemarkResponse<CinemarkMovieResult>> {
         const res = await fetch(
             process.env.CINEMARK_API_URL +
@@ -40,7 +47,11 @@ export class CinemarkService {
         return sessions;
     }
 
-    public async getFormatedMovies(): Promise<Movie[]> {
+    public async getFormatedMovies(theaterId: string): Promise<Movie[]> {
+        const theater = await this.theaterService.getById(theaterId);
+        if (!theater) {
+            throw new Error(`Theater ${theaterId} not found`);
+        }
         const movies: Movie[] = [];
         const data = await this.getMovies();
 
@@ -55,17 +66,17 @@ export class CinemarkService {
                 imageUrl: element.assets[0].url,
                 ageIndication: element.ageIndication,
                 sessions: [],
+                originId: element.id,
                 theater: {
-                    id: "",
-
-                    movieId: element.id,
+                    id: theater.id,
+                    originId: theater.originId,
+                    name: theater.name,
                 },
             };
             const sessions = await this.getMovieSession(element.id);
 
             sessions.dataResult.forEach((result) => {
                 movie.sessions = this.formatSessions(result);
-                console.log("total rooms:", result.rooms.length);
             });
 
             movies.push(movie);

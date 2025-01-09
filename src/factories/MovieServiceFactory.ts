@@ -1,25 +1,25 @@
 import { Movie, MovieDTO } from "@/interfaces/Movie";
-import { CinemarkService } from "@/service/CinemarkService";
-import { MongodbService } from "@/service/MongodbService";
+import { MongodbRepository } from "@/repositories/mongodb/MongodbRepository";
 import { MovieService } from "@/service/MovieService";
+import { TheaterService } from "@/service/TheaterService";
+import { CityMongodbRepository } from "@/repositories/mongodb/CityMongodbRepository";
+import { CityService } from "@/service/CityService";
 
 export class MovieServiceFactory {
-    public static async create(movieDTO: MovieDTO): Promise<Omit<Movie, "id">> {
-        const cinemarkService = new CinemarkService();
-        const db = await MongodbService.db();
-        const mongodbService = new MongodbService(db, "movie");
-        return await new MovieService(cinemarkService, mongodbService).create(
-            movieDTO
-        );
+    private static async getParams() {
+        const db = await MongodbRepository.db();
+        const CityRepository = new CityMongodbRepository(db);
+        const repository = new MongodbRepository(db, "movie");
+        const cityService = new CityService(CityRepository);
+        const theaterService = new TheaterService(repository, cityService);
+        return { db, CityRepository, repository, cityService, theaterService };
     }
 
-    public static async getMovies(): Promise<Movie[]> {
-        const cinemarkService = new CinemarkService();
-        const db = await MongodbService.db();
-        const mongodbService = new MongodbService(db, "movie");
-        return await new MovieService(
-            cinemarkService,
-            mongodbService
-        ).getMovies();
+    public static async create(movieDTO: MovieDTO): Promise<Omit<Movie, "id">> {
+        const { repository, theaterService } =
+            await MovieServiceFactory.getParams();
+        return await new MovieService(repository, theaterService).create(
+            movieDTO
+        );
     }
 }

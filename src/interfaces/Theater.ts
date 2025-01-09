@@ -3,6 +3,7 @@ export interface TheaterDTO {
     city: TheaterCity;
     url: string;
     movies: TheaterMovie[];
+    originId: string;
 }
 
 export interface Theater extends TheaterDTO {

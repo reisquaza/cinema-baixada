@@ -1,8 +1,8 @@
 import { Repository, RepositoryResponse } from "@/interfaces/Repository";
-import { Collection, Db, MongoClient } from "mongodb";
+import { Collection, Db, MongoClient, ObjectId } from "mongodb";
 
-export class MongodbService implements Repository {
-    private readonly collection: Collection;
+export class MongodbRepository implements Repository {
+    protected readonly collection: Collection;
 
     constructor(database: Db, collection: string) {
         this.collection = database.collection(collection);
@@ -30,13 +30,16 @@ export class MongodbService implements Repository {
         });
     }
 
-    // get<T>(): Promise<T> {
-
-    // }
-
-    // getById<T>(id: string): Promise<T> {
-
-    // }
+    public async getById<T>(id: string): Promise<T | null> {
+        const find = await this.collection.findOne({
+            _id: new ObjectId(id),
+        });
+        if (!find) {
+            return null;
+        }
+        const result = { ...find, id: find._id.toString() };
+        return result as T;
+    }
 
     // update<T>(updateDTO: Partial<T>): Promise<T> {
 
