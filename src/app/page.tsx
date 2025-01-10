@@ -3,7 +3,7 @@ import { Movie } from "../interfaces/Movie";
 import { MovieServiceFactory } from "@/factories/MovieServiceFactory";
 
 export default async function Home() {
-    const movies: Movie[] = await MovieServiceFactory.getMovies();
+    const movies: Movie[] = await MovieServiceFactory.getbytheater();
     return (
         <div>
             {movies.map((movie) => (

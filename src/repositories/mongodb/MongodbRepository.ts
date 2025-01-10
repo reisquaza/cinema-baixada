@@ -1,5 +1,5 @@
-import { Repository, RepositoryResponse } from "@/interfaces/Repository";
-import { Collection, Db, MongoClient, ObjectId } from "mongodb";
+import { Repository, RepositoryCreateResult } from "@/interfaces/Repository";
+import { Collection, Db, Document, MongoClient, ObjectId } from "mongodb";
 
 export class MongodbRepository implements Repository {
     protected readonly collection: Collection;
@@ -8,16 +8,24 @@ export class MongodbRepository implements Repository {
         this.collection = database.collection(collection);
     }
 
-    public static async db() {
+    protected static async db() {
         const client = new MongoClient(process.env.MONGODB_URL!);
         await client.connect();
         return client.db(process.env.MONGODB_DATABASE);
     }
 
-    public async create<T>(
-        createDTO: Omit<T, "id">
-    ): Promise<RepositoryResponse> {
-        const { insertedId } = await this.collection.insertOne(createDTO);
+    protected stringToObjectId(id: string) {
+        return new ObjectId(id);
+    }
+
+    protected objectIdToString(objectId: ObjectId) {
+        return objectId.toHexString();
+    }
+
+    public async create<T>(createDTO: T): Promise<RepositoryCreateResult> {
+        const { insertedId } = await this.collection.insertOne(
+            createDTO as Document
+        );
         return { id: insertedId.toHexString() };
     }
 

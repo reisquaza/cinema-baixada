@@ -15,4 +15,8 @@ export class MovieServiceFactory {
         const movieService = await this.build();
         return await movieService.create(movieDTO);
     }
+
+    public static async getByTheaterId(theaterId: string) {
+        
+    }
 }
