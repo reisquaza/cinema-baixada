@@ -13,4 +13,9 @@ export class CityServiceFactory {
         const cityService = await this.build();
         return await cityService.create(cityModel);
     }
+
+    public static async get() {
+        const cityService = await this.build();
+        return await cityService.getAll();
+    }
 }

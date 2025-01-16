@@ -16,4 +16,9 @@ export class TheaterServiceFactory {
         const theaterService = await this.build();
         return await theaterService.create(theater);
     }
+
+    public static async getById(id: string) {
+        const theaterService = await this.build();
+        return await theaterService.getById(id);
+    }
 }

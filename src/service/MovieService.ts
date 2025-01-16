@@ -37,6 +37,7 @@ export class MovieService {
         if (!theater) {
             throw new Error(`Theater ${theaterId} not found`);
         }
+        console.log("theater:", theater);
         const data = await this.repository.getBy<Movie>({
             theater: {
                 id: theater.id,
@@ -44,6 +45,7 @@ export class MovieService {
                 originId: theater.originId,
             },
         });
+        console.log("data: ", data);
         const movies: Movie[] = data.map((movie: Movie) => {
             return {
                 id: movie.id,

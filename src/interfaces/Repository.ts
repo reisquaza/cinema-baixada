@@ -15,6 +15,7 @@ export interface CityRepository extends Repository {
 }
 export interface MovieRepository extends Repository {
     get(): Promise<Movie[]>;
+    getByTheaterId(theaterId: string): Promise<Movie[]>;
 }
 export interface TheaterRepository extends Repository {
     get(): Promise<Theater[]>;

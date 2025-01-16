@@ -1,14 +1,17 @@
 import { CinemarkServiceFactory } from "@/factories/CinemarkServiceFactory";
 import { MovieServiceFactory } from "@/factories/MovieServiceFactory";
+import { Movie } from "@/interfaces/Movie";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    const movies = await CinemarkServiceFactory.getFormatedMovies(
-        "677e9e875e5b1486fb0ed2de"
+    const theaterId = "67869dafb22e4dd19eb86193";
+    const cinemarkMovies = await CinemarkServiceFactory.getFormatedMovies(
+        theaterId
     );
-    for (let index = 0; index < movies.length; index++) {
-        await MovieServiceFactory.create(movies[index]);
+    const movies: Movie[] = [];
+    for (let index = 0; index < cinemarkMovies.length; index++) {
+        const movie = await MovieServiceFactory.create(cinemarkMovies[index]);
+        movies.push(movie);
     }
-
     return NextResponse.json(movies);
 }

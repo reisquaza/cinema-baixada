@@ -74,11 +74,9 @@ export class CinemarkService {
                 },
             };
             const sessions = await this.getMovieSession(element.id);
-
             sessions.dataResult.forEach((result) => {
                 movie.sessions = this.formatSessions(result);
             });
-
             movies.push(movie);
         }
 

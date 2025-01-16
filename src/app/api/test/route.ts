@@ -5,17 +5,20 @@ import { TheaterDTO } from "@/interfaces/Theater";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    const cityDTO: CityDTO = {
-        name: "Santos",
+    const city: CityDTO = {
+        name: "SANTOS",
         theaters: [],
     };
-    const city = await CityServiceFactory.create(cityDTO);
+    const { id } = await CityServiceFactory.create(city);
     const theaterDTO: TheaterDTO = {
-        city: { id: "677ffbe0b290bb8e9eaf8d4c", name: city.name },
+        city: {
+            id,
+            name: city.name,
+        },
         movies: [],
-        name: "cinemark",
-        url: "https://www.cinemark.com.br",
-        originId: "706",
+        name: "CINEMARK",
+        originId: "709",
+        url: "https://cinemark.com.br",
     };
     const theater = await TheaterServiceFactory.create(theaterDTO);
     return NextResponse.json(theater);

@@ -8,7 +8,7 @@ export class MongodbRepository implements Repository {
         this.collection = database.collection(collection);
     }
 
-    protected static async db() {
+    public static async db() {
         const client = new MongoClient(process.env.MONGODB_URL!);
         await client.connect();
         return client.db(process.env.MONGODB_DATABASE);
@@ -49,6 +49,14 @@ export class MongodbRepository implements Repository {
         return result as T;
     }
 
+    public async getByTheaterId(theaterId: string) {
+        const find = await this.collection
+            .find({
+                $where: `theater._id: ${this.stringToObjectId(theaterId)}`,
+            })
+            .toArray();
+        return find;
+    }
     // update<T>(updateDTO: Partial<T>): Promise<T> {
 
     // }
